@@ -1,0 +1,48 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "description": "Learning node, express and mongoDB",
+  "main": "app.js",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "scripts": {
+    "start": "nodemon server.js",
+    "start:prod": "NODE_ENV=production nodemon server.js",
+    "debug": "ndb server.js"
+  },
+  "author": "Jonas Schmedtmann",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "express-mongo-sanitize": "^2.0.2",
+    "express-rate-limit": "^5.2.6",
+    "helmet": "^4.4.1",
+    "hpp": "^0.2.3",
+    "html-to-text": "^8.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.18",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.3",
+    "ndb": "^1.1.5",
+    "nodemailer": "^6.5.0",
+    "pug": "^3.0.2",
+    "sharp": "^0.29.1",
+    "slugify": "^1.4.7",
+    "validator": "^13.5.2",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "prettier": "^1.17.0"
+  }
+}
