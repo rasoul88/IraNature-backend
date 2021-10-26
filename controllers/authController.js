@@ -61,8 +61,8 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 2) check if user exists and password is correct
   const user = await User.findOne({ email }).select('+password');
-  console.log(user);
-  const isCorrect = await user.correctPassword(password, user.password);
+  const isCorrect =
+    user && (await user.correctPassword(password, user.password));
   if (!user || !isCorrect) {
     return next(new AppError('Incorrect email or password', 401));
   }
@@ -79,7 +79,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   ) {
     token = req.headers.authorization.split(' ')[1];
   }
-  console.log('token', token);
+  // console.log('token', token);
   if (!token) {
     next(
       new AppError('You are not logged in! Please login to get access.', 401)
@@ -87,7 +87,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   // 2) Verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  console.log(decoded);
+  // console.log(decoded);
   // 3) Check if user still exsist
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
@@ -135,9 +135,10 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   // 3) Send it to user's email
   try {
-    const resetURL = `${req.protocol}://${req.get(
-      'host'
-    )}/api/v1/users/resetPassword/${resetToken}`;
+    // const resetURL = `${req.protocol}://${req.get(
+    //   'host'
+    // )}/api/v1/users/resetPassword/${resetToken}`;
+    const resetURL = `http://localhost:3000/resetPassword?token=${resetToken}`;
     await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({
@@ -173,7 +174,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     return next(new AppError('Token is invalid or has expired', 400));
   }
   user.password = req.body.password;
-  user.confirmPassword = req.body.passwordConfirm;
+  user.confirmPassword = req.body.confirmPassword;
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
   await user.save();
