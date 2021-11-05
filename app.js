@@ -17,14 +17,19 @@ const app = express();
 
 // 1) GLOBAL MIDDLEWARES
 // Implement CORS
-app.use(cors());
+const corsOptions = {
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 // Access-Control-Allow-Origin *
 // api.natours.com, front-end natours.com
 // app.use(cors({
 //   origin: 'https://www.natours.com'
 // }))
 
-app.options('*', cors());
+app.options('*', cors(corsOptions));
 // app.options('/api/v1/tours/:id', cors());
 
 // Set security HTTP headers

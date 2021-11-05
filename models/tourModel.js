@@ -65,8 +65,7 @@ const tourSchema = new mongoose.Schema(
       trim: true
     },
     imageCover: {
-      type: String,
-      required: [true, 'A tour must have a cover image']
+      type: String
     },
     images: [String],
     createdAt: {
@@ -74,35 +73,48 @@ const tourSchema = new mongoose.Schema(
       default: Date.now(),
       select: false
     },
-    startDates: [Date],
+    startDates: [Object],
+    // startDates: [Date],
     secretTour: {
       type: Boolean,
       default: false
     },
+    // startLocation: {
+    //   // GeoJSON
+    //   type: {
+    //     type: String,
+    //     default: 'Point',
+    //     enum: ['Point']
+    //   },
+    //   coordinates: [Number],
+    //   address: String,
+    //   description: String
+    // },
     startLocation: {
-      // GeoJSON
-      type: {
-        type: String,
-        default: 'Point',
-        enum: ['Point']
-      },
-      coordinates: [Number],
-      address: String,
-      description: String
+      type: String,
+      required: [true, 'A tour must have a start location']
     },
-    locations: [
-      {
-        type: {
-          type: String,
-          default: 'Point',
-          enum: ['Point']
-        },
-        coordinates: [Number],
-        address: String,
-        description: String,
-        day: Number
-      }
-    ],
+    // locations: [
+    //   {
+    //     type: {
+    //       type: String,
+    //       default: 'Point',
+    //       enum: ['Point']
+    //     },
+    //     coordinates: [Number],
+    //     address: String,
+    //     description: String,
+    //     day: Number
+    //   }
+    // ],
+    destination: {
+      type: String,
+      required: [true, 'A tour must have a destination']
+    },
+    gradientColor: {
+      type: Object,
+      default: { from: '#2998ff', to: '#5643fa' }
+    },
     guides: [
       {
         type: mongoose.Schema.ObjectId,
@@ -116,7 +128,7 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
-tourSchema.index({ startLocation: '2dsphere' });
+// tourSchema.index({ startLocation: '2dsphere' });
 
 tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;

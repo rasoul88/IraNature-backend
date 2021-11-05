@@ -24,6 +24,8 @@ router.patch(
   userController.updateMe
 );
 
+router.get('/tourGuides', userController.getTourGuides);
+
 router.delete('/deleteMe', userController.deleteMe);
 
 router.use(authController.restrictTo('admin'));

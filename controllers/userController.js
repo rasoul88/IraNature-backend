@@ -126,3 +126,17 @@ exports.getMe = (req, res, next) => {
 exports.getUser = factory.getOne(User);
 
 exports.deleteUser = factory.deleteOne(User);
+
+exports.getTourGuides = catchAsync(async (req, res, next) => {
+  const users = await User.find({
+    $or: [{ role: 'guide' }, { role: 'lead-guide' }]
+  }).select('name _id');
+
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      users
+    }
+  });
+});
