@@ -277,3 +277,16 @@ exports.getDistances = catchAsync(async (req, res, next) => {
     }
   });
 });
+
+exports.getMyCreatedTours = catchAsync(async (req, res, next) => {
+  const myCreatedTours = await Tour.find({ creator: req.user._id }).sort({
+    createdAt: -1
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: myCreatedTours
+    }
+  });
+});

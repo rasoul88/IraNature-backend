@@ -22,6 +22,14 @@ router
   );
 
 router
+  .route('/getMyCreatedTours')
+  .get(
+    authController.protect,
+    authController.restrictTo('admin', 'lead-guide'),
+    tourController.getMyCreatedTours
+  );
+
+router
   .route('/tours-within/:distance/center/:latlng/unit/:unit')
   .get(tourController.getToursWithin);
 ///tours-within/:400/center/:-40,55/unit/:mi

@@ -38,6 +38,7 @@ exports.updateOne = Model => {
 
 exports.createOne = Model => {
   return catchAsync(async (req, res, next) => {
+    req.body.creator = req.user._id;
     const newTour = await Model.create(req.body);
 
     res.status(200).json({
