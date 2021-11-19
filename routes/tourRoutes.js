@@ -8,7 +8,7 @@ const router = express.Router();
 router.use('/:tourId/reviews', reviewRouter);
 
 router
-  .route('/top-5-tours')
+  .route('/top-3-tours')
   .get(tourController.aliasTopTours, tourController.getAllTours);
 
 router.route('/tour-stats').get(tourController.getTourStats);

@@ -12,7 +12,7 @@ const reviewSchema = new mongoose.Schema(
       min: 1,
       max: 5
     },
-    cratedAt: {
+    createdAt: {
       type: Date,
       default: Date.now
     },
@@ -67,7 +67,7 @@ reviewSchema.statics.calcAverageRatings = async function(tourId) {
   } else {
     await Tour.findByIdAndUpdate(tourId, {
       ratingsQuantity: 0,
-      ratingsAverage: 4.5
+      ratingsAverage: 0
     });
   }
 };

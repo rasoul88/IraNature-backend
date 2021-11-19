@@ -39,12 +39,12 @@ exports.updateOne = Model => {
 exports.createOne = Model => {
   return catchAsync(async (req, res, next) => {
     req.body.creator = req.user._id;
-    const newTour = await Model.create(req.body);
+    const doc = await Model.create(req.body);
 
     res.status(200).json({
       status: 'success',
       data: {
-        doc: newTour
+        doc
       }
     });
   });
@@ -81,9 +81,20 @@ exports.getAll = Model => {
       .paginate();
 
     const docs = await features.query;
+
+    const AllDocsCount = await new APIFeatures(Model.find(filter), req.query)
+      .filter()
+      .query.count({});
+    const pages =
+      AllDocsCount % 8 === 0
+        ? Math.floor(AllDocsCount / 8)
+        : Math.floor(AllDocsCount / 8) + 1;
+
     // SEND RESPONSE
     res.status(200).json({
       status: 'success',
+      AllDocsCount,
+      pages,
       results: docs.length,
       data: {
         docs

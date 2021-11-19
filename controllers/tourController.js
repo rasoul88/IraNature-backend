@@ -37,7 +37,7 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
   await sharp(req.files.imageCover[0].buffer)
     .resize(2000, 1333)
     .toFormat('jpeg')
-    .jpeg({ quality: 90 })
+    .jpeg({ quality: 100 })
     .toFile(`public/img/tours/${req.body.imageCover}`);
 
   // 2) images
@@ -48,7 +48,7 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
       await sharp(file.buffer)
         .resize(2000, 1333)
         .toFormat('jpeg')
-        .jpeg({ quality: 90 })
+        .jpeg({ quality: 100 })
         .toFile(`public/img/tours/${fileName}`);
 
       req.body.images.push(fileName);
@@ -59,9 +59,8 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
 });
 
 exports.aliasTopTours = (req, res, next) => {
-  req.query.limit = '5';
+  req.query.limit = '3';
   req.query.sort = '-ratingsAverage,price';
-  req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
   next();
 };
 
