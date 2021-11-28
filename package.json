@@ -6,11 +6,7 @@
   "engines": {
     "node": "13.14.0"
   },
-  "scripts": {
-    "start": "nodemon server.js",
-    "start:prod": "NODE_ENV=production nodemon server.js",
-    "debug": "ndb server.js"
-  },
+  "scripts": {},
   "author": "Jonas Schmedtmann",
   "license": "ISC",
   "dependencies": {
