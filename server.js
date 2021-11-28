@@ -27,8 +27,7 @@ mongoose
     console.log('your database is connected');
   });
 
-// const port = process.env.PORT || 3000;
-const port = 6060;
+const port = process.env.PORT || 6060;
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
 });
