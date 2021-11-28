@@ -4,7 +4,7 @@
   "description": "Learning node, express and mongoDB",
   "main": "app.js",
   "engines": {
-    "node": ">=10.0.0"
+    "node": "13.14.0"
   },
   "scripts": {
     "start": "nodemon server.js",
