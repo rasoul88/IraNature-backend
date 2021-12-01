@@ -11,7 +11,7 @@ const handleDuplicateFieldsDB = err => {
     : err.keyValue;
   console.log(value);
 
-  const message = `${value} قبلا استفاده شده است `;
+  const message = `${JSON.stringify(value)} قبلا استفاده شده است `;
   return new AppError(message, 400);
 };
 const handleValidationErrorDB = err => {
