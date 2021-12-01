@@ -6,7 +6,9 @@ const handleCastErrorDB = err => {
 };
 
 const handleDuplicateFieldsDB = err => {
-  const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
+  const value = err.errmsg
+    ? err.errmsg.match(/(["'])(\\?.)*?\1/)[0]
+    : err.keyValue;
   console.log(value);
 
   const message = `${value} قبلا استفاده شده است `;
