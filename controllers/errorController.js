@@ -58,6 +58,7 @@ const sendErrorProd = (err, res) => {
 
 module.exports = (err, req, res, next) => {
   // console.log(err.stack);
+  console.log('err', err);
 
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
@@ -66,7 +67,6 @@ module.exports = (err, req, res, next) => {
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
-    console.log('err', err);
 
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
