@@ -80,7 +80,7 @@ module.exports = class Email {
 
   async sendPasswordReset() {
     await this.send(
-      'بازنشانی کلمه عبور',
+      'passwordReset',
       'توکن بازنشانی رمز عبور شما (معتبر تا 10 دقیقه)'
     );
   }
