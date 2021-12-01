@@ -41,6 +41,7 @@ const sendErrorProd = (err, res) => {
       status: err.status,
       message: err.message
     });
+    console.error('ERROR 💥', err);
 
     // Programming or other unknown error: don't leak error details
   } else {
