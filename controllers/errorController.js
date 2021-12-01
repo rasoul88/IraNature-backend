@@ -58,7 +58,7 @@ const sendErrorProd = (err, res) => {
 
 module.exports = (err, req, res, next) => {
   // console.log(err.stack);
-
+  console.log('err', err);
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
@@ -73,6 +73,7 @@ module.exports = (err, req, res, next) => {
       error = handleValidationErrorDB(error);
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
+    console.log('error', error);
 
     sendErrorProd(error, res);
   }
