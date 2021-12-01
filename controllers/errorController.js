@@ -1,7 +1,7 @@
 const AppError = require('./../utils/AppError');
 
 const handleCastErrorDB = err => {
-  const message = `Invalid ${err.path}: ${err.value}.`;
+  const message = `نامعتبر ${err.path}: ${err.value}.`;
   return new AppError(message, 400);
 };
 
@@ -9,21 +9,21 @@ const handleDuplicateFieldsDB = err => {
   const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
   console.log(value);
 
-  const message = `Duplicate field value: ${value}. Please use another value!`;
+  const message = `${value} قبلا استفاده شده است `;
   return new AppError(message, 400);
 };
 const handleValidationErrorDB = err => {
   const errors = Object.values(err.errors).map(el => el.message);
 
-  const message = `Invalid input data. ${errors.join('. ')}`;
+  const message = `داده ی ورودی نامعتبر. ${errors.join('. ')}`;
   return new AppError(message, 400);
 };
 
 const handleJWTError = () =>
-  new AppError('Invalid token. please log in again', 401);
+  new AppError('مجور ورود نامعتبر است، لطفا مجددا وارد شوید', 401);
 
 const handleJWTExpiredError = () =>
-  new AppError('Your token has expired. please log in again', 401);
+  new AppError('تاریخ اعتبار مجوز ورود گذشته است، لطفا مجددا وارد شوید', 401);
 
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
@@ -36,19 +36,16 @@ const sendErrorDev = (err, res) => {
 
 const sendErrorProd = (err, res) => {
   // Operational, trusted error: send message to client
+  console.error('ERROR 💥', err);
+
   if (err.isOperation) {
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message
     });
-    console.error('ERROR 💥', err);
 
     // Programming or other unknown error: don't leak error details
   } else {
-    // 1) Log error
-    console.error('ERROR 💥', err);
-
-    // 2) Send generic message
     res.status(500).json({
       status: 'error',
       message: 'Something went very wrong!'

@@ -7,7 +7,7 @@ exports.deleteOne = Model => {
     const doc = await Model.findByIdAndDelete(req.params.id);
 
     if (!doc) {
-      return next(new AppError('No document found with this ID', 404));
+      return next(new AppError('داده ای مطابق با این شناسه وجود ندارد', 404));
     }
     res.status(204).json({
       status: 'success',
@@ -24,7 +24,7 @@ exports.updateOne = Model => {
     });
 
     if (!doc) {
-      return next(new AppError('No document with this ID', 404));
+      return next(new AppError('داده ای مطابق با این شناسه وجود ندارد', 404));
     }
 
     res.status(200).json({
@@ -57,7 +57,7 @@ exports.getOne = (Model, popOptions) => {
     const doc = await query;
 
     if (!doc) {
-      return next(new AppError('No document found with this ID', 404));
+      return next(new AppError('داده ای مطابق با این شناسه وجود ندارد', 404));
     }
     res.status(200).json({
       status: 'success',
