@@ -11,16 +11,6 @@ router
   .route('/top-3-tours')
   .get(tourController.aliasTopTours, tourController.getAllTours);
 
-router.route('/tour-stats').get(tourController.getTourStats);
-
-router
-  .route('/monthly-plan/:year')
-  .get(
-    authController.protect,
-    authController.restrictTo('admin', 'lead-guide'),
-    tourController.getMonthlyPlan
-  );
-
 router
   .route('/getMyCreatedTours')
   .get(
@@ -28,16 +18,6 @@ router
     authController.restrictTo('admin', 'lead-guide'),
     tourController.getMyCreatedTours
   );
-
-router
-  .route('/tours-within/:distance/center/:latlng/unit/:unit')
-  .get(tourController.getToursWithin);
-///tours-within/:400/center/:-40,55/unit/:mi
-
-router
-  .route('/tours-within/:latlng/unit/:unit')
-  .get(tourController.getDistances);
-///tours-within//:-40,55/unit/:mi
 
 router
   .route('/')
