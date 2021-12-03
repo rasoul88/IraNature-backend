@@ -39,7 +39,7 @@ exports.updateOne = Model => {
 
 exports.createOne = Model => {
   return catchAsync(async (req, res, next) => {
-    req.body.creator = req.user._id;
+    req.body.creator = req.user?._id;
     const doc = await Model.create(req.body);
 
     //send notification if we create a new tour
