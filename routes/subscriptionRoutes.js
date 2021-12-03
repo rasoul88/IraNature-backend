@@ -4,3 +4,5 @@ const subscriptionController = require('../controllers/subscriptionController');
 const router = express.Router();
 
 router.route('/').post(subscriptionController.createReview);
+
+module.exports = router;
