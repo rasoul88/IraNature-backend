@@ -1,7 +1,8 @@
+var webpush = require('web-push');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/AppError');
 const APIFeatures = require('../utils/apiFeatures');
-var webpush = require('web-push');
+const Subscription = require('../models/subscriptionModel');
 
 exports.deleteOne = Model => {
   return catchAsync(async (req, res, next) => {
@@ -45,27 +46,33 @@ exports.createOne = Model => {
     //send notification if we create a new tour
     if (doc.destination) {
       //1) get all subscriptions
-      //2) subscriptions.forEach(function (sub) {
-      //   var pushConfig = {
-      //     endpoint: sub.val().endpoint,
-      //     keys: {
-      //       auth: sub.val().keys.auth,
-      //       p256dh: sub.val().keys.p256dh,
-      //     },
-      //   };
-      //   webpush
-      //     .sendNotification(
-      //       pushConfig,
-      //       JSON.stringify({
-      //         title: "New Post",
-      //         content: "New Post added!",
-      //         openUrl: "/help",
-      //       })
-      //     )
-      //     .catch(function (error) {
-      //       console.log(error);
-      //     });
-      // });
+      const subscriptions = await Subscription.find({});
+      //2) send notification
+      subscriptions.forEach(function(sub) {
+        var pushConfig = {
+          endpoint: sub.endpoint,
+          keys: {
+            auth: sub.keys.auth,
+            p256dh: sub.keys.p256dh
+          }
+        };
+        const content =
+          'تور جدیدی با عنوان' +
+          doc.name +
+          'اضافه شد. با ثبت نام در این تور یک سفر به یاد ماندنی داشته باشید';
+        webpush
+          .sendNotification(
+            pushConfig,
+            JSON.stringify({
+              title: 'تور جدید',
+              content,
+              openUrl: `http://localhost:3000/tours/${doc._id}`
+            })
+          )
+          .catch(function(error) {
+            console.log(error);
+          });
+      });
     }
 
     res.status(200).json({
