@@ -56,10 +56,9 @@ exports.createOne = Model => {
             p256dh: sub.keys.p256dh
           }
         };
-        const content =
-          'تور جدیدی با عنوان' +
-          doc.name +
-          'اضافه شد. با ثبت نام در این تور یک سفر به یاد ماندنی داشته باشید';
+        const content = `تور جدیدی با عنوان
+          ${' `'}${doc.name}${'` '}
+          اضافه شد. با ثبت نام در این تور یک سفر به یاد ماندنی داشته باشید`;
         webpush
           .sendNotification(
             pushConfig,
