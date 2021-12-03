@@ -45,9 +45,8 @@ exports.createOne = Model => {
 
     //send notification if we create a new tour
     if (doc.destination) {
-      //1) get all subscriptions
       const subscriptions = await Subscription.find({});
-      //2) send notification
+
       subscriptions.forEach(function(sub) {
         var pushConfig = {
           endpoint: sub.endpoint,
