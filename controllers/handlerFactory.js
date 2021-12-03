@@ -1,6 +1,7 @@
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/AppError');
 const APIFeatures = require('../utils/apiFeatures');
+var webpush = require('web-push');
 
 exports.deleteOne = Model => {
   return catchAsync(async (req, res, next) => {
@@ -40,6 +41,32 @@ exports.createOne = Model => {
   return catchAsync(async (req, res, next) => {
     req.body.creator = req.user._id;
     const doc = await Model.create(req.body);
+
+    //send notification if we create a new tour
+    if (doc.destination) {
+      //1) get all subscriptions
+      //2) subscriptions.forEach(function (sub) {
+      //   var pushConfig = {
+      //     endpoint: sub.val().endpoint,
+      //     keys: {
+      //       auth: sub.val().keys.auth,
+      //       p256dh: sub.val().keys.p256dh,
+      //     },
+      //   };
+      //   webpush
+      //     .sendNotification(
+      //       pushConfig,
+      //       JSON.stringify({
+      //         title: "New Post",
+      //         content: "New Post added!",
+      //         openUrl: "/help",
+      //       })
+      //     )
+      //     .catch(function (error) {
+      //       console.log(error);
+      //     });
+      // });
+    }
 
     res.status(200).json({
       status: 'success',

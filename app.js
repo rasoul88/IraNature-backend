@@ -6,14 +6,26 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
+var webpush = require('web-push');
 
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const subscriptionRouter = require('./routes/subscriptionRoutes');
 
 const app = express();
+
+//set web-push confiquration
+var publicVapidKey =
+  'BKMOXd1ARsXXz97HxAFb6tU2BmVdhDJkvpscv77UWadgtLidzKZUxHMloFHdOx18kuYxHkYUTHGzbW0I_cwwAyE';
+var privateVapidKey = '4-Vy1ZZQIEeUD6u8v53V7ElOM5DGalDTz1LJe8RhDW8';
+webpush.setVapidDetails(
+  'mailto:iranature.co@gmail.com',
+  publicVapidKey,
+  privateVapidKey
+);
 
 // 1) GLOBAL MIDDLEWARES
 // Implement CORS
@@ -85,6 +97,7 @@ app.use((req, res, next) => {
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/subscriptions', subscriptionRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
