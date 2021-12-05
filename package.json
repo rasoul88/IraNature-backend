@@ -11,7 +11,7 @@
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js"
   },
-  "author": "Jonas Schmedtmann",
+  "author": "Rasoul Sahraei",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
