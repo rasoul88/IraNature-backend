@@ -30,7 +30,11 @@ webpush.setVapidDetails(
 // 1) GLOBAL MIDDLEWARES
 // Implement CORS
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  origin: [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://irnature-9h8erpxss-rasoul88.vercel.app'
+  ],
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200
 };
