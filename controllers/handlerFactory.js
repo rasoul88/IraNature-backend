@@ -64,7 +64,7 @@ exports.createOne = Model => {
             JSON.stringify({
               title: 'تور جدید',
               content,
-              openUrl: `http://localhost:3000/tours/${doc._id}`
+              openUrl: `${process.env.FRONT_END_URL}/tours/${doc._id}`
             })
           )
           .catch(function(error) {
