@@ -19,12 +19,13 @@ const createSendToken = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true,
-    // when you use sameSite your client should be https://
-    sameSite: 'none'
+    httpOnly: true
   };
 
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+  // when you use sameSite your client should be https://
+  if (process.env.NODE_ENV === 'production') cookieOptions.sameSite = 'none';
 
   res.cookie('jwt', token, cookieOptions);
   // Remove password from output
